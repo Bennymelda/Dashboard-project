@@ -11,7 +11,7 @@
 ‎Live Demo
 
 ‎https://dashboard-project-9ly6.onrender.com
-‎(Render)
+‎(Render.com)
 ‎
 
 
@@ -43,9 +43,11 @@
 ‎assets/
 ‎  Images, icons, and static visual resources
 ‎
+
 ‎components/
 ‎  Reusable UI building blocks used across pages
 ‎
+
 ‎  Card.tsx
 ‎  Responsible for rendering individual cards including:
 ‎  - title
@@ -57,6 +59,7 @@
 ‎  Responsible for rendering board columns and the cards inside them.
 ‎  Handles card creation and deletion inside a column.
 ‎
+
 
 ‎context/
 ‎  Global state management using React Context API
@@ -86,26 +89,33 @@
 ‎  • Column
 ‎  • Card
 ‎
+
 ‎App.tsx
 ‎  Root component responsible for routing and layout structure.
 ‎
+
 ‎main.tsx
 ‎  Application entry point where React renders the app.
 ‎
+
 ‎index.css
 ‎  Global styles and Tailwind configuration.
 ‎
+
 ‎Configuration Files
 ‎
 ‎package.json
 ‎Project dependencies and scripts.
 ‎
+
 ‎tsconfig.json
 ‎TypeScript configuration.
 ‎
+
 ‎vite.config.ts
 ‎Vite bundler configuration.
 ‎
+
 ‎tailwind.config.js
 ‎TailwindCSS configuration.
 ‎
@@ -113,6 +123,8 @@
 
 ‎
 ‎This structure keeps components small, reusable, and maintainable while allowing the project to scale easily.
+
+
 ‎State Architecture
 ‎The application uses React Context API for centralized state management.
 ‎
@@ -125,9 +137,11 @@
 ‎Works well for medium-scale applications
 ‎Provides a foundation for real-time updates in Stage 2
 ‎
+
 ‎The state is separated into domain state and UI state to maintain clarity and scalability.
 ‎State Shape
 ‎
+
 ‎The state is designed to be normalized to avoid deep nesting and reduce rendering complexity.
 ‎
 ‎
@@ -135,6 +149,7 @@
 
 ‎Benefits of Normalization
 ‎
+
 ‎Faster updates
 ‎Avoids deep nested mutations
 ‎Easier to support real-time updates later
@@ -143,6 +158,8 @@
 ‎State Architecture Diagram
 ‎
 ‎
+
+
 ‎AppProvider (Global State)
 ‎        │
 ‎        │
@@ -159,20 +176,27 @@
 ‎        ▼
 ‎     Card Component
 ‎
+
+
 ‎All components access and update state through the AppContext rather than passing data through many layers of props.
 ‎
 ‎
+
+
 ‎Performance Strategy
 ‎
 ‎Several performance strategies were implemented to ensure efficient rendering and scalability.
 ‎
+
 ‎1. Memoization
 ‎Components that render lists such as cards and columns use memoization strategies (React.memo) to prevent unnecessary re-renders.
 ‎
+
 ‎2. Normalized State
 ‎Using normalized state prevents deep object mutations and allows updates to be more targeted.
 ‎This reduces React reconciliation cost and improves rendering performance.
 ‎
+
 ‎3. Component Separation
 ‎Components are broken down into small reusable units:
 ‎Dashboard
@@ -181,10 +205,13 @@
 ‎Card
 ‎This ensures updates only affect the necessary part of the UI.
 ‎
+
 ‎4. Lazy Loading
 ‎The Board page is lazily loaded to reduce the initial bundle size and improve loading performance.
 ‎This allows the dashboard to load faster while heavier board logic loads only when needed.
 ‎
+
+
 ‎Accessibility Implementation
 ‎
 ‎Accessibility was treated as a first-class concern.
@@ -216,10 +243,12 @@
 ‎
 ‎Key Engineering Decisions
 ‎
+
 ‎1. Context API Instead of Redux
 ‎Redux was intentionally avoided to keep the architecture lightweight while still enabling global state sharing.
 ‎Context API is sufficient for the current scope and can be upgraded later if the application grows.
 ‎
+
 ‎2. TypeScript Everywhere
 ‎TypeScript ensures:
 ‎strong type safety
@@ -228,6 +257,7 @@
 ‎better developer experience
 ‎All domain models such as Board, Column, and Card are strictly typed.
 ‎
+
 ‎3. TailwindCSS for Styling
 ‎Tailwind was used because it:
 ‎enables fast UI development
@@ -235,10 +265,12 @@
 ‎avoids large CSS files
 ‎keeps styles colocated with components
 ‎
+
 ‎4. Component-Driven Architecture
 ‎The UI was designed using reusable components rather than page-specific implementations.
 ‎This improves scalability and maintainability as the application grows.
 ‎
+
 ‎5. Markdown Parsing
 ‎Card descriptions support Markdown formatting using a markdown parser so that text such as:
 ‎Copy code
@@ -248,6 +280,8 @@
 ‎- lists
 ‎renders properly instead of showing raw markdown syntax.
 ‎
+
+
 ‎Future Improvements (Stage 2 Preparation)
 ‎
 ‎The architecture was designed with future features in mind:
