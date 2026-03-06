@@ -92,12 +92,12 @@ const closeBoard = () => navigate("/");
       <header className="fixed top-0 left-0 w-full bg-white py-5 px-8 border-b-2 border-gray-100 flex justify-between items-center mb-4 z-50">
         
           <FaArrowLeft  onClick={closeBoard} className="text-gray-500 text-xl"/>
- <h2 className="text-xl font-bold text-zinc-900">{board.title}</h2>
+ <h2 className="text-xl font-bold text-zinc-900 whitespace-nowrap">{board.title}</h2>
          <div className="flex gap-2 items-center">
-          <FaTrash onClick={handleDeleteBoard} className="text-red-500 cursor-pointer" />
+          <FaTrash onClick={handleDeleteBoard} className=" hidden md:block text-red-500 cursor-pointer" />
           <p
             onClick={handleDeleteBoard}
-            className="text-red-500 font-bold cursor-pointer"
+            className="text-red-500 whitespace-nowrap font-bold cursor-pointer"
           >
             Delete Board
           </p>
