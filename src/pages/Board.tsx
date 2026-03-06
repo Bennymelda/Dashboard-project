@@ -89,7 +89,7 @@ const closeBoard = () => navigate("/");
   if (!board) return <div>Board not found</div>;
   return (
     <div >
-      <header className="fixed top-0 left-0 w-full bg-white py-5 px-8 border-b-2 border-gray-100 flex justify-between items-center mb-4 z-50">
+      <header className="fixed top-0 left-0 w-full bg-white py-5 px-4 border-b-2 border-gray-100 flex justify-between items-center mb-4 z-50">
         
           <FaArrowLeft  onClick={closeBoard} className="text-gray-500 text-xl"/>
  <h2 className="text-xl font-bold text-zinc-900 whitespace-nowrap">{board.title}</h2>

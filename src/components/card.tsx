@@ -22,28 +22,29 @@ function CardComponent({
 }: Props) {
   const [title, setTitle] = useState(existingCard?.title || "");
   const [description, setDescription] = useState(existingCard?.description || "");
-  const [tags, setTags] = useState(existingCard?.tags.join(", ") || "");
+  const [tags, setTags] = useState<string[]>(existingCard?.tags || []);
+const [tagInput, setTagInput] = useState("");
   const [dueDate, setDueDate] = useState(existingCard?.dueDate || "");
 
   const handleSave = () => {
     if (!title.trim()) return;
 
     if (existingCard && editCard) {
-      editCard(existingCard.id, {
-        title,
-        description,
-        tags: tags.split(",").map((t) => t.trim()),
-        dueDate: dueDate || null,
-      });
-    } else {
-      addCard(columnId, {
-        id: uuidv4(),
-        title,
-        description,
-        tags: tags.split(",").map((t) => t.trim()),
-        dueDate: dueDate || null,
-      });
-    }
+  editCard(existingCard.id, {
+    title,
+    description,
+    tags,
+    dueDate: dueDate || null,
+  });
+} else {
+  addCard(columnId, {
+    id: uuidv4(),
+    title,
+    description,
+    tags,
+    dueDate: dueDate || null,
+  });
+}
     onClose();
   };
 
@@ -114,17 +115,50 @@ useEffect(() => {
 
         />
         </div>
-        
-        <div  className="flex flex-col gap-1 mb-1">
-           <label htmlFor=""  className="font-bold text-lg">Tag</label>
-           <input
-          type="text"
-          placeholder="Tags (comma separated)"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          className="outline-none focus:ring-1 text-lg focus:ring-purple-700 focus:border-purple-700 p-2 w-full mb-2 bg-gray-50 border-2 mt-2 rounded-xl border-gray-300 px-4 py-3"
-        />
-        </div>
+        <div className="flex flex-col gap-1 mb-2">
+  <label className="font-bold text-lg">Tags</label>
+
+  {/* Show current tags as pills */}
+  <div className="flex flex-wrap gap-2 mb-2">
+    {tags.map((tag) => (
+      <span
+        key={tag}
+        className="bg-purple-200 text-purple-800 px-2 py-1 rounded-full flex items-center gap-1"
+      >
+        {tag}
+        <button
+          type="button"
+          onClick={() => setTags(tags.filter((t) => t !== tag))}
+          className="text-sm font-bold"
+        >
+          ×
+        </button>
+      </span>
+    ))}
+  </div>
+
+  {/* Input for new tag */}
+  <input
+    type="text"
+    placeholder="Type tag and press Enter"
+    value={tagInput}
+    onChange={(e) => setTagInput(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" && tagInput.trim() !== "") {
+        e.preventDefault();
+        if (!tags.includes(tagInput.trim())) {
+          setTags([...tags, tagInput.trim()]);
+        }
+        setTagInput(""); // clear input after adding
+      }
+      if (e.key === "Backspace" && tagInput === "") {
+        setTags(tags.slice(0, -1)); // delete last tag
+      }
+    }}
+    className="outline-none focus:ring-1 text-lg focus:ring-purple-700 focus:border-purple-700 p-2 w-full bg-gray-50 border-2 rounded-xl border-gray-300 px-4 py-3"
+  />
+</div>
+
         <div className="flex flex-col gap-1 mb-1">
           <label htmlFor=""  className="font-bold text-lg">Due Date</label>
           <input
