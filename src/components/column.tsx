@@ -27,8 +27,8 @@ function ColumnComponent({ column, onDeleteColumn, editColumn, cards, addCard,ed
 console.log("Rendering Column:", column.id);
 
   return (
-    <div className="p-4 rounded-2xl border-2 border-gray-300 flex flex-col  bg-gray-50 mb-10 w-120 
-     mx-auto  mt-10">
+    <div className="p-4  mx-4 rounded-2xl border-2 border-gray-300 flex flex-col  bg-gray-50 mb-10 
+       mt-10">
       {/* Column Title Edit */}
       {editingColumn ? (
         <div className="flex flex-col gap-1 mb-2">
@@ -56,11 +56,14 @@ console.log("Rendering Column:", column.id);
           </div>
         </div>
       ) : (
-        <div className=" flex flex-col justify-between h-full  items-center mb-2">
+        <div className=" flex  flex-col justify-between h-full items-center mb-2">
           
-          <div>
-            <div className="flex   justify-between gap-90 mb-10 items-center  w-full ">
-              <h3 className="font-bold text-2xl text-zinc-800 ">{column.title}</h3>
+          
+            <div className="flex  justify-between mb-10  items-center  w-full ">
+              <div>
+                <h3 className="font-bold text-2xl  text-zinc-800 ">{column.title}</h3>
+              </div>
+              
             <div className="flex gap-1 items-center ">
           
             <MdEdit onClick={() => setEditingColumn(true)}className="text-gray-500 cursor-pointer text-lg" />
@@ -68,12 +71,12 @@ console.log("Rendering Column:", column.id);
           </div>
 
             </div>
-            <div className="flex flex-col gap-4 mb-2 ">
+            <div className="flex w-full px-2 flex-col gap-4 mb-2 ">
         {(cards || []).map((card) => {
   console.count(`Card Render: ${card.id}`);
 
   return (
-    <div key={card.id} className="border pb-8 rounded p-2 bg-white border-gray-200">
+    <div key={card.id} className="border  pb-8 rounded p-2 bg-white border-gray-200">
       <h4 className="font-bold text-lg mb-4">{card.title}</h4>
 
       <div className="card break-all text-md text-gray-800 p-2 mb-2">
@@ -110,7 +113,7 @@ console.log("Rendering Column:", column.id);
   );
 })}
 
-      </div>
+      
           </div>
           
           <div className=" flex justify-between items-center cursor-pointer"
@@ -125,7 +128,7 @@ console.log("Rendering Column:", column.id);
           setEditingCard(null); // for new card
           setShowCardModal(true);
         }}
-        className="mt- text-purple-700 text-lg font-bold px-2 py-1 rounded w-full"
+        className="mt-2 text-purple-700 text-lg font-bold px-2 py-1 rounded w-full"
       >
         Add Card
       </p>

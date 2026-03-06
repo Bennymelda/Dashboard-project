@@ -14,7 +14,7 @@ const BoardItem = memo(function BoardItem({
   onOpen: (id: string) => void;
 }) {
   return (
-    <article className="border pb-15 rounded-lg h-72  p-4 shadow-sm border-gray-100 bg-white">
+    <article className="border pb-15 rounded-lg h-64 p-4 shadow-sm border-gray-100 bg-white">
       <div className="flex justify-between">
        <h3 className="font-bold  text-2xl mb-4 md:4xl">{board.title}</h3>
        
