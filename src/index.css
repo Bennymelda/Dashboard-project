@@ -1,0 +1,10 @@
+@import "tailwindcss";
+body{
+    background-color:whitesmoke ;
+}
+.card{
+max-width: 100%;
+word-wrap: break-word;
+white-space: pre-wrap;
+overflow-wrap: break-word;
+}
