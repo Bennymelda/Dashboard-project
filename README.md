@@ -2,16 +2,21 @@
 ‎
 ‎A production-style collaborative workspace tool for organizing ideas, documentation, and tasks using boards, columns, and cards.
 ‎
+
 ‎This project simulates a real SaaS internal product used by teams to manage work visually and collaboratively.
 ‎
+
 ‎Built using React + Vite + TypeScript with a strong focus on scalable architecture, performance, accessibility, and clean component design.
 ‎
 ‎Live Demo
+
 ‎https://dashboard-project-9ly6.onrender.com
 ‎(Render)
 ‎
+
+
 ‎Tech Stack
-‎
+
 ‎React (Vite)
 ‎TypeScript
 ‎TailwindCSS
@@ -19,12 +24,15 @@
 ‎React Markdown for markdown parsing
 ‎No UI component libraries were used as required.
 ‎
+
 ‎
 ‎Folder Structure Explanation
 ‎
 ‎The project follows a modular and scalable architecture that separates responsibilities across components, pages, state management, and types.
 ‎Copy code
 ‎
+
+
 ‎my-knowledge-board/
 ‎
 ‎public/
@@ -49,6 +57,7 @@
 ‎  Responsible for rendering board columns and the cards inside them.
 ‎  Handles card creation and deletion inside a column.
 ‎
+
 ‎context/
 ‎  Global state management using React Context API
 ‎
@@ -73,9 +82,9 @@
 ‎
 ‎  index.ts
 ‎  Defines types such as:
-‎  - Board
-‎  - Column
-‎  - Card
+‎  • Board
+‎  • Column
+‎  • Card
 ‎
 ‎App.tsx
 ‎  Root component responsible for routing and layout structure.
@@ -101,6 +110,7 @@
 ‎TailwindCSS configuration.
 ‎
 ‎
+
 ‎
 ‎This structure keeps components small, reusable, and maintainable while allowing the project to scale easily.
 ‎State Architecture
@@ -122,6 +132,7 @@
 ‎
 ‎
 ‎
+
 ‎Benefits of Normalization
 ‎
 ‎Faster updates
