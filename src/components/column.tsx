@@ -208,7 +208,7 @@ setDraggedCardId(null);
 setSourceColumnId(null);
 
 setSourceIndex(null);
-
+onDragStartGlobal()
 return;
 
 }
@@ -226,7 +226,7 @@ setDraggedCardId(null);
 setSourceColumnId(null);
 
 setSourceIndex(null);
-
+onDragEndGlobal()
 }
 
 }}
