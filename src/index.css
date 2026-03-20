@@ -1,6 +1,6 @@
 @import "tailwindcss";
 body{
-    background-color:whitesmoke ;
+    background-color:var(--gene);
 }
 .card{
 max-width: 100%;
@@ -8,3 +8,104 @@ word-wrap: break-word;
 white-space: pre-wrap;
 overflow-wrap: break-word;
 }
+@keyframes pulse {
+
+0% { opacity: 1; }
+
+50% { opacity: 0.4; }
+
+100% { opacity: 1; }
+
+}
+
+/* index.css or globals.css */
+
+
+
+/* Light mode (default) */
+
+:root {
+
+--bg-color: #ffffff;
+--text:rgb(26, 25, 25);
+--primary-color: #7c3aed;
+--text-color:white;
+--border-color: #d1d5db;
+--button:#7e22ce;
+--inner:white;
+--cards:rgb(245, 233, 233);
+--gene:whitesmoke;
+--board:#7e22ce;
+--list:rgb(151, 147, 147);
+--modal:white;
+--one:white;
+--two:white;
+--tag:#E9D5FF;
+--tags:#9e5bd8;
+--desc:rgb(126, 116, 116);
+--in:white;
+--bg: #f4f6fb;
+
+--card: #ffffff;
+
+
+
+--border: #e5e7eb;
+
+--input-bg: #ffffff;
+--success: #9e5bd8;
+
+--warning: black;
+--errors:red;
+--danger: #ef4444;
+--card-2: #f8f9fc;
+--b:#FEE2E2;
+--skele: white;
+}
+
+
+
+/* Dark mode */
+
+[data-theme="dark"] {
+--skele: rgb(26, 24, 24);
+--bg-color: #222020; /* dark gray background */
+--text:white;
+--text-color: black; /* light text */
+
+--primary-color: #917fc7; /* purple shade for dark */
+
+--border-color: #374151; /* dark gray borders */
+--button:rgb(240, 80, 16);
+--inner:black;
+--gene:black;
+--board:rgb(240, 80, 16);
+--cards:rgb(43, 39, 39);
+--list:white;
+--modal:rgb(122, 115, 115);
+--one:black;
+--two:rgb(26, 25, 25);
+--desc:rgb(219, 216, 216);
+--tag:#FEDFAA;
+--tags:#ce4008;
+--in:rgb(105, 100, 100);
+--bg: #181b20;
+
+--card: #222327;
+
+--border: #374151;
+
+--input-bg: #25282e;
+
+--success:rgb(240, 80, 16); ;
+
+--warning: white;
+
+--danger: #f87171;
+--errors:white;
+--card-2: #bfc1c4;
+--b:rgb(46, 44, 44);
+}
+
+
+

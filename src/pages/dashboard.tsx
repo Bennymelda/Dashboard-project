@@ -3,7 +3,18 @@ import { useContext, useState, useCallback, memo } from "react";
 import { AppContext } from "../context/AppContext";
 import { useRef, useEffect } from "react";
 import type { BoardType } from "../types";
-import { FaTrash, FaPlus, FaTimes} from "react-icons/fa";
+import Button from "../components/buttton";
+import { FaTrash, FaPlus} from "react-icons/fa";
+import { toast } from "react-toastify";
+import { DarkModeToggle } from "../components/theme";
+import Input from "../components/input";
+import BoardSkeleton from "../components/BoardSkeleton";
+import Textarea from "../components/Textarea";
+import Modal from "../components/modal";
+// Success example
+
+
+
 
 const BoardItem = memo(function BoardItem({
   board,
@@ -14,9 +25,9 @@ const BoardItem = memo(function BoardItem({
   onOpen: (id: string) => void;
 }) {
   return (
-    <article className="border pb-15 rounded-lg h-64 p-4 shadow-sm border-gray-100 bg-white">
+    <article className="border pb-15 rounded-lg h-64 p-4 shadow-sm border-[var(--two)] bg-[var(--two)]">
       <div className="flex justify-between">
-       <h3 className="font-bold  text-2xl mb-4 md:4xl">{board.title}</h3>
+       <h3 className="font-bold  text-2xl mb-4 md:4xl text-[var(--text)]">{board.title}</h3>
        
      <button
   aria-label="Delete board"
@@ -31,8 +42,8 @@ const BoardItem = memo(function BoardItem({
 </button>
       </div>
       <hr className="opacity-20  mb-4 " />
-      <p className="text-gray-900 text-lg mb-4 md:text-xl">{board.description}</p>
-      <p className="text-md text-gray-800 font-semibold md:text-lg">
+      <p className=" text-lg mb-4 md:text-xl text-[var(--text)]">{board.description}</p>
+      <p className="text-md text-[var(--text)] font-semibold md:text-lg">
         {board.createdAt.toDateString()}
       </p>
 
@@ -49,8 +60,7 @@ function Dashboard() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const context = useContext(AppContext)!; // assume provider exists
-  const { boards, addBoard, deleteBoard } = context;
-
+  const { boards, addBoard, deleteBoard, isLoading} = context;
 
 {/* ...inside Dashboard component */}
 
@@ -115,45 +125,232 @@ useEffect(() => {
     setTitle("");
     setDescription("");
     setShowModal(false);
+    
+toast.success("Board created successfully!");
+
+
+
+
   }, [title, description, addBoard]);
 
   // Memoized delete
   const handleDeleteBoard = useCallback(
     (id: string) => {
       deleteBoard(id);
+      // Error example
+toast.success("Board deleted successfully!");
+
     },
     [deleteBoard]
+    
   );
 const handleOpenBoard = useCallback((id: string) => {
     navigate(`/Board/${id}`);
   }, [navigate]);
+    const [errors, setErrors] = useState({
+
+title: "",
+
+description: "",
+
+});
+
+
+
+const validateBoardForm = () => {
+
+const newErrors = {
+
+title: title.trim() ? "" : "No board title yet",
+
+description: description.trim() ? "" : "No board description yet",
+
+};
+
+
+
+setErrors(newErrors);
+
+
+
+return !newErrors.title && !newErrors.description;
+
+};
+
+
+
+const handleSubmitBoard = () => {
+
+if (!validateBoardForm()) return;
+
+handleCreateBoard();
+
+};
   return (
+    
     <main className="p-6 mb-20 ">
-      <div className="flex  justify-between items-center  fixed top-0 left-0 w-full bg-white shadow-md py-5  px-2 z-50 mb-20">
-            <h1 className="text-xl font-bold text-purple-700">
+      <div className="flex  justify-between items-center  fixed top-0 left-0 w-full bg-[var(--bg-color)] shadow-md py-5  px-2 z-50 mb-20">
+            <DarkModeToggle />
+            <h1 className="text-xl font-bold text-[var(--text)]">
               Workflow Dashboard
             </h1>
-            <button
+            
+            <Button
          onClick={() => setShowModal(true)}
-        className="bg-purple-700  text-white px-4 py-2 rounded"
+        variant="primary" size="sm"
       >
         Create Board
-      </button>
+      </Button>
+     
+      
           </div>
       {/* Board List */}
-    <section className=" mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 ">
-  {boards.map((board) => (
-    <div
-      key={board.id}
-      onClick={() => handleOpenBoard(board.id)}
-      className="cursor-pointer"
-    >
-      <BoardItem board={board} onDelete={handleDeleteBoard} onOpen={handleOpenBoard} />
-    </div>
-  ))}
+    {/*
+<section className="mt-10 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-3 gap-4">
+  {isLoading ? (
+    <>
+    <BoardSkeleton />
+    <BoardSkeleton />
+    <BoardSkeleton />
+    </>
+  ):
+  <>
+{boards.length === 0 ?(
+  
+
+<div className="col-span-full flex flex-col items-center justify-center p-10 border-2 border-dashed border-[var(--board)] rounded-lg mt-10">
+
+<p className="text-[var(--button)] text-xl font-bold mb-2">No boards yet!</p>
+
+<p className="text-[var(--list)]  mb-4">Click the button below to create your first board.</p>
+
+<Button
+
+onClick={() => setShowModal(true)}
+
+variant="primary"
+size="md"
+
+>
+
+Create Board
+
+</Button>
+
+</div>
+):(
+  
+boards.map((board) => (
+
+<div
+
+key={board.id}
+
+onClick={() => handleOpenBoard(board.id)}
+
+className="cursor-pointer bg"
+
+>
+
+<BoardItem board={board} onDelete={handleDeleteBoard} onOpen={handleOpenBoard} />
+
+</div>
+
+))}
+</>
+)}
+
+
+</section>
+  */}
+
+  <section className="mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+
+{isLoading ? (
+
+<>
+
+<BoardSkeleton />
+
+<BoardSkeleton />
+
+
+
+</>
+
+) : (
+
+<>
+
+{boards.length === 0 ? (
+
+<div className="col-span-full flex flex-col items-center justify-center p-10 border-2 border-dashed border-[var(--board)] rounded-lg mt-10">
+
+<p className="text-[var(--button)] text-xl font-bold mb-2">
+
+No boards yet!
+
+</p>
+
+<p className="text-[var(--list)] mb-4">
+
+Click the button below to create your first board.
+
+</p>
+
+<Button
+
+onClick={() => setShowModal(true)}
+
+variant="primary"
+
+size="md"
+
+>
+
+Create Board
+
+</Button>
+
+</div>
+
+) : (
+
+boards.map((board) => (
+
+<div
+
+key={board.id}
+
+onClick={() => handleOpenBoard(board.id)}
+
+className="cursor-pointer bg"
+
+>
+
+<BoardItem
+
+board={board}
+
+onDelete={handleDeleteBoard}
+
+onOpen={handleOpenBoard}
+
+/>
+
+</div>
+
+))
+
+)}
+
+</>
+
+)}
+
 </section>
 
-      {/* Modal */}
+    {/*
       {showModal && (
         <div
           className="fixed inset-0 bg-black/40 flex items-center justify-center "
@@ -161,59 +358,330 @@ const handleOpenBoard = useCallback((id: string) => {
           aria-modal="true"
            onClick={() => setShowModal(false)}
         >
-          <div className="bg-white p-6 rounded-lg w-96" onClick={(e) => e.stopPropagation()} ref={modalRef} >
+          <div className="bg-[var(--modal)]  p-6 rounded-lg w-96" onClick={(e) => e.stopPropagation()} ref={modalRef} >
             <div className="flex justify-between items-center mb-10">
-              <h2 className="text-2xl font-bold ">Create New Board</h2>
+              <h2 className="text-2xl font-bold text-[var(--text)]">Create New Board</h2>
               <FaTimes onClick={() => setShowModal(false)} className="text-2xl text-gray-400 cursor-pointer"/>
             </div>
             
-            <label htmlFor="" className="font-bold text-lg">Board Title</label>
-            <input
+            <label htmlFor="" className="font-bold text-lg text-[var(--text)]">Board Title</label>
+            <Input
               aria-label="Board title"
               type="text"
               placeholder="Board Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="p-2 w-full mb-2 bg-gray-50 border-2 mt-2 rounded border-gray-300 focus:border-purple-700 px-4 py-3 outline-none focus:ring-1 text-lg focus:ring-purple-700"
+              variant="primary"
+                inputSize="sm"
               ref={firstInputRef} // set ref for auto-focus
             />
             <div className="mt-5 mb-10">
-              <label htmlFor="" className="font-bold text-lg">Description </label>
-            <textarea
+              <label htmlFor="" className="font-bold text-lg text-[var(--text)]">Description </label>
+            <Textarea
               aria-label="Board description"
               placeholder="Board Description"
               value={description}
+              variant="primary"
+              textareaSize="sm"
               onChange={(e) => setDescription(e.target.value)}
-              className="p-2 w-full mb-2 bg-gray-50 border-2 mt-2 rounded border-gray-300 focus:border-purple-700 px-4 py-3 outline-none focus:ring-1 text-lg focus:ring-purple-700 "
+             
             />
             </div>
             
 
             <div className="flex justify-end md:px-10">
-              <button
+              <Button
                 onClick={handleCreateBoard}
-                className="bg-purple-700 px-6 rounded cursor-pointer font-bold text-white py-2 "
+                variant="primary"
+                size="lg"
               >
               Create Board
-              </button>
+              </Button>
 
               
             </div>
           </div>
         </div>
       )}
-      <div  onClick={() => setShowModal(true)} className="mt-20  flex justify-center flex-col items-center gap-4 text-center border-3 border-dashed border-purple-500 rounded p-15 ">
+      <div  onClick={() => setShowModal(true)} className="mt-20  flex justify-center flex-col items-center gap-4 text-center border-3 border-dashed border-[var(--board)] rounded p-15 ">
         <div className="text-center w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center">
-          <FaPlus className="text-purple-500  text-2xl cursor-pointer"  onClick={() => setShowModal(true)} />
+          <FaPlus className="text-[var(--board)]  text-2xl cursor-pointer"  onClick={() => setShowModal(true)} />
         </div>
-        <button
+        <Button
           onClick={() => setShowModal(true)}
-          className="text-purple-700 font-semibold text-2xl cursor-pointer"
+          variant="primary"
+        
         >
           Create New Board
-        </button>
+        </Button>
         
       </div>
+      */}
+   
+
+
+{/*
+{showModal && (
+
+<div
+
+className="fixed inset-0 bg-black/40 flex items-center justify-center"
+
+role="dialog"
+
+aria-modal="true"
+
+onClick={() => setShowModal(false)}
+
+>
+
+<div
+
+className="bg-[var(--modal)] p-6 rounded-lg w-96"
+
+onClick={(e) => e.stopPropagation()}
+
+ref={modalRef}
+
+>
+
+<div className="flex justify-between items-center mb-10">
+
+<h2 className="text-2xl font-bold text-[var(--text)]">Create New Board</h2>
+
+<FaTimes
+
+onClick={() => setShowModal(false)}
+
+className="text-2xl text-gray-400 cursor-pointer"
+
+/>
+
+</div>
+
+
+
+<label className="font-bold text-lg text-[var(--text)]">Board Title</label>
+
+<Input
+
+aria-label="Board title"
+
+type="text"
+
+placeholder="Board Title"
+
+value={title}
+
+onChange={(e) => {
+
+setTitle(e.target.value);
+
+if (errors.title) {
+
+setErrors((prev) => ({ ...prev, title: "" }));
+
+}
+
+}}
+
+variant="primary"
+
+inputSize="sm"
+
+ref={firstInputRef}
+
+/>
+
+{errors.title && (
+
+<p className="text-sm text-[var(--errors)] mt-1 mb-3">{errors.title}</p>
+
+)}
+
+
+
+<div className="mt-5 mb-10">
+
+<label className="font-bold text-lg text-[var(--text)]">Description</label>
+
+<Textarea
+
+aria-label="Board description"
+
+placeholder="Board Description"
+
+value={description}
+
+variant="inner"
+
+textareaSize="sm"
+
+onChange={(e) => {
+
+setDescription(e.target.value);
+
+if (errors.description) {
+
+setErrors((prev) => ({ ...prev, description: "" }));
+
+}
+
+}}
+
+/>
+
+{errors.description && (
+
+<p className="text-sm text-[var(--errors)] mt-1">{errors.description}</p>
+
+)}
+
+</div>
+
+
+
+<div className="flex justify-end md:px-10">
+
+<Button onClick={handleSubmitBoard} variant="primary" size="lg">
+
+Create Board
+
+</Button>
+
+</div>
+
+</div>
+
+</div>
+
+)}
+*/}
+<Modal
+
+isOpen={showModal}
+
+onClose={() => setShowModal(false)}
+
+size="md"
+
+title="Create New Board"
+
+>
+
+<label className="font-bold text-lg text-[var(--text)]">Board Title</label>
+
+<Input
+
+aria-label="Board title"
+
+type="text"
+
+placeholder="Board Title"
+
+value={title}
+
+onChange={(e) => {
+
+setTitle(e.target.value);
+
+if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
+
+}}
+
+variant="primary"
+
+inputSize="sm"
+
+ref={firstInputRef}
+
+/>
+
+{errors.title && (
+
+<p className="text-sm text-[var(--errors)] mt-1 mb-3">{errors.title}</p>
+
+)}
+
+
+
+<div className="mt-5 mb-10">
+
+<label className="font-bold text-lg text-[var(--text)]">Description</label>
+
+<Textarea
+
+aria-label="Board description"
+
+placeholder="Board Description"
+
+value={description}
+
+variant="inner"
+
+textareaSize="sm"
+
+onChange={(e) => {
+
+setDescription(e.target.value);
+
+if (errors.description) setErrors((prev) => ({ ...prev, description: "" }));
+
+}}
+
+/>
+
+{errors.description && (
+
+<p className="text-sm text-[var(--errors)] mt-1">{errors.description}</p>
+
+)}
+
+</div>
+
+
+
+<div className="flex justify-end md:px-10">
+
+<Button onClick={handleSubmitBoard} variant="primary" size="lg">
+
+Create Board
+
+</Button>
+
+</div>
+
+</Modal>
+
+<div
+
+onClick={() => setShowModal(true)}
+
+className="mt-20 flex justify-center flex-col items-center gap-4 text-center border-3 border-dashed border-[var(--board)] rounded p-15"
+
+>
+
+<div className="text-center w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center">
+
+<FaPlus
+
+className="text-[var(--board)] text-2xl cursor-pointer"
+
+onClick={() => setShowModal(true)}
+
+/>
+
+</div>
+
+
+
+<Button onClick={() => setShowModal(true)} variant="primary">
+
+Create New Board
+
+</Button>
+
+</div>
     </main>
   );
 }
