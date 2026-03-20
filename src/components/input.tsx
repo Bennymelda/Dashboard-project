@@ -30,9 +30,9 @@ secondary: "border-gray-500 bg-gray-50 text-gray-800 focus:ring-gray-500",
 
 const sizes = {
 
-sm: "p-2 w-full mb-2 mt-2 px-4 py-3 text-sm font-normal",
+sm: "p-2 w-full mb-2 mt-2 px-4 py-3 text-sm md:text-normal font-normal",
 
-md: "px-3 py-2 text-md",
+md: "px-3 py-2 text-md md:text-xl",
 
 lg: "px-4 py-3 text-lg",
 

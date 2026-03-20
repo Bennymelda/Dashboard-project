@@ -11,7 +11,7 @@ return (
 
 
 
-<div className="flex gap-4 ">
+<div className="flex gap-4 md:flex-row flex-col ">
 
 {[1, 2, 3].map((col) => (
 
@@ -19,7 +19,7 @@ return (
 
 key={col}
 
-className="w-full rounded-lg bg-gray-100 dark:bg-gray-800 p-4"
+className="w-full rounded-lg bg-[var(--skeles)]"
 
 >
 

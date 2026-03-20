@@ -98,6 +98,7 @@ title: "",
 description: "",
 
 dueDate: "",
+tag: "",
 
 });
 
@@ -112,7 +113,7 @@ title: title.trim() ? "" : "No title yet",
 description: description.trim() ? "" : "No description yet",
 
 dueDate: dueDate ? "" : "No due date yet",
-
+tag: tagInput.trim() ? "" : "No tag yet",
 };
 
 
@@ -121,7 +122,7 @@ setErrors(newErrors);
 
 
 
-return !newErrors.title && !newErrors.description && !newErrors.dueDate;
+return !newErrors.title && !newErrors.description && !newErrors.dueDate && !newErrors.tag;
 
 };
 
@@ -157,7 +158,7 @@ ref={cardModalRef}
 
 >
 
-<h2 className="text-lg font-bold mb-2">
+<h2 className="text-lg font-bold mb-2 text-[var(--text)]">
 
 {existingCard ? "Edit Card" : "New Card"}
 
@@ -167,7 +168,7 @@ ref={cardModalRef}
 
 <div className="flex flex-col gap-1 mb-2">
 
-<label className="font-bold text-lg">Card Title</label>
+<label className="font-bold text-lg text-[var(--text)] ">Card Title</label>
 
 <Input
 
@@ -199,7 +200,7 @@ ref={firstCardInputRef}
 
 {errors.title && (
 
-<p className="text-sm text-red-500 mt-1">{errors.title}</p>
+<p className="text-sm text-[var(--errors)] mt-1">{errors.title}</p>
 
 )}
 
@@ -209,7 +210,7 @@ ref={firstCardInputRef}
 
 <div className="flex flex-col gap-1 mb-2">
 
-<label className="font-bold text-lg">Description</label>
+<label className="font-bold text-lg text-[var(--text)] ">Description</label>
 
 <Textarea
 
@@ -237,7 +238,7 @@ textareaSize="sm"
 
 {errors.description && (
 
-<p className="text-sm text-red-500 mt-1">{errors.description}</p>
+<p className="text-sm text-[var(--errors)] mt-1">{errors.description}</p>
 
 )}
 
@@ -247,7 +248,7 @@ textareaSize="sm"
 
 <div className="flex flex-col gap-1 mb-2">
 
-<label className="font-bold text-lg">Tags</label>
+<label className="font-bold text-lg text-[var(--text)]">Tags</label>
 
 
 
@@ -284,6 +285,10 @@ size="kop"
 ))}
 
 </div>
+
+{errors.tag && (
+  <p className="text-sm text-[var(--errors)] mt-1">{errors.tag}</p>
+)}
 
 
 
@@ -333,7 +338,7 @@ inputSize="sm"
 
 <div className="flex flex-col gap-1 mb-2">
 
-<label className="font-bold text-lg">Due Date</label>
+<label className="font-bold text-lg text-[var(--text)]">Due Date</label>
 
 <Input
 
@@ -361,7 +366,7 @@ inputSize="sm"
 
 {errors.dueDate && (
 
-<p className="text-sm text-red-500 mt-1">{errors.dueDate}</p>
+<p className="text-sm text-[var(--errors)] mt-1">{errors.dueDate}</p>
 
 )}
 
@@ -430,127 +435,6 @@ size="sm"
 </div>
 
 );
-/*
-  return (
-    <div className="fixed inset-0 overflow-x-auto space-x-4 flex items-center justify-center bg-black/40 z-50" onClick={onClose}>
-      <div className="bg-[var(--modal)]  p-4 rounded w-96" onClick={(e) => e.stopPropagation()} ref={cardModalRef}>
-        <h2 className="text-lg font-bold mb-2">{existingCard ? "Edit Card" : "New Card"}</h2>
-        <div className=" flex flex-col gap-1 mb-1">
-          <label htmlFor=""  className="font-bold text-lg">Card Title</label>
-        <Input
-          type="text"
-          placeholder="What needs to be done?"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          variant="primary"
-          inputSize="sm"
-            ref={firstCardInputRef}
-        />
-        </div>
-        <div className="flex flex-col gap-1 mb-1">
-          <label htmlFor=""  className="font-bold text-lg">Description</label>
-          <Textarea
-          placeholder="Description (Markdown supported)"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-       variant="primary"
-          textareaSize="sm"
-
-        />
-        </div>
-        <div className="flex flex-col gap-1 mb-2">
-  <label className="font-bold text-lg">Tags</label>
-
-  <div className="flex flex-wrap gap-2 mb-2">
-    {tags.map((tag) => (
-      <span
-        key={tag}
-        className="bg-[var(--tag)] text-[var(--button)] px-2 py-1 rounded-full flex items-center gap-1"
-      >
-        {tag}
-        <Button
-          type="button"
-          onClick={() => setTags(tags.filter((t) => t !== tag))}
-          size="kop"
-        >
-          ×
-        </Button>
-      </span>
-    ))}
-  </div>
-
-  
-  <Input
-    type="text"
-    placeholder="Type tag and press Enter"
-    value={tagInput}
-    onChange={(e) => setTagInput(e.target.value)}
-    onKeyDown={(e) => {
-      if (e.key === "Enter" && tagInput.trim() !== "") {
-        e.preventDefault();
-        if (!tags.includes(tagInput.trim())) {
-          setTags([...tags, tagInput.trim()]);
-        }
-        setTagInput(""); // clear input after adding
-      }
-      if (e.key === "Backspace" && tagInput === "") {
-        setTags(tags.slice(0, -1)); // delete last tag
-      }
-    }}
-    variant="primary"
-          inputSize="sm"
-  />
-</div>
-
-        <div className="flex flex-col gap-1 mb-1">
-          <label htmlFor=""  className="font-bold text-lg">Due Date</label>
-          <Input
-          type="date"
-          value={dueDate || ""}
-          onChange={(e) => setDueDate(e.target.value)}
-          variant="primary"
-          inputSize="sm"
-       
-        />
-        </div>
-
-        
-
-        <div className="mb-2">
-          <span className="font-semibold text-sm">Preview:</span>
-          <div className="p-2 w-full mb-2 bg-gray-50 border-2 mt-2 rounded-xl border-gray-300 px-4 py-3">
-            <ReactMarkdown>{description || "Nothing yet..."}</ReactMarkdown>
-          </div>
-        </div>
-  
-        <div className="flex gap-2 justify-end">
-          {existingCard && deleteCard && (
-            
-            <Button onClick={handleDelete} size="lit" variant="goot">
-              Delete
-            </Button>
-          )}
-          <div className="flex gap-4">
-            <Button onClick={onClose} variant="cit" size="al">
-            Cancel
-          </Button>
-          
-          <Button
-                onClick={handleSave}
-              
-                variant="primary"
-                size="sm"
-              >
-              Create Card
-              </Button>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-  );
-  */
 
 
 }

@@ -52,7 +52,7 @@ onClick={onClose} // click outside to close
 
 <div
 
-className={clsx("bg-white dark:bg-gray-800 p-6 rounded-lg", sizeClasses[size])}
+className={clsx("bg-[var(--modal)]  p-6 rounded-lg", sizeClasses[size])}
 
 onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
 
@@ -62,7 +62,7 @@ onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
 
 <div className="flex justify-between items-center mb-4">
 
-<h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{title}</h2>
+<h2 className="text-xl font-bold text-[var(--text)] ">{title}</h2>
 
 <button
 

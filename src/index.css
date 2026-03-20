@@ -61,6 +61,7 @@ overflow-wrap: break-word;
 --card-2: #f8f9fc;
 --b:#FEE2E2;
 --skele: white;
+--skeles: rgb(240, 232, 232);
 }
 
 
@@ -68,7 +69,8 @@ overflow-wrap: break-word;
 /* Dark mode */
 
 [data-theme="dark"] {
---skele: rgb(26, 24, 24);
+--skele: rgb(61, 58, 58);
+--skeles: rgb(110, 103, 103);
 --bg-color: #222020; /* dark gray background */
 --text:white;
 --text-color: black; /* light text */
@@ -91,7 +93,7 @@ overflow-wrap: break-word;
 --in:rgb(105, 100, 100);
 --bg: #181b20;
 
---card: #222327;
+--card: #252527;
 
 --border: #374151;
 
@@ -102,7 +104,7 @@ overflow-wrap: break-word;
 --warning: white;
 
 --danger: #f87171;
---errors:white;
+--errors:rgb(236, 218, 218);
 --card-2: #bfc1c4;
 --b:rgb(46, 44, 44);
 }

@@ -190,48 +190,7 @@ if(isLoading){
       </div>
 
 
-      {/* 
-      {showColumnModal && (
-        <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center "
-          role="dialog"
-          aria-modal="true"
-          onClick={() => setShowColumnModal(false)}
-        >
-          <div
-            className="bg-[var(--modal)] p-6 rounded-lg w-96"
-            onClick={(e) => e.stopPropagation()}
-          >
-             <div className="flex justify-between items-center mb-10">
-                          <h2 className="text-2xl font-bold text-[var(--text)]">New Column</h2>
-                          <FaTimes onClick={() => setShowColumnModal(false)}className="text-2xl text-gray-400 cursor-pointer"/>
-                        </div>
-          
-            <Input
-              aria-label="Column title"
-              type="text"
-              value={newColumnTitle}
-              onChange={(e) => setNewColumnTitle(e.target.value)}
-              placeholder="Column Title"
-              variant="primary"
-              inputSize="sm"
-            />
-            <div className="flex justify-start">
-              <Button
-                onClick={handleAddColumn}
-                variant="primary"
-                size="md"
-               
-              >
-              Add column
-              </Button>
 
-              
-            </div>
-          </div>
-        </div>
-      )}
-      */}
       {showColumnModal && (
 
 <Modal

@@ -9,6 +9,7 @@ import { MdEdit} from "react-icons/md";
 import Button from "./buttton";
 import Input from "./input";
 import Badge from "./badge";
+
 interface Props {
   column: ColumnType;
     cards: CardType[]; // pass cards as a prop{column.cardIds.map(id => cards[id])}
@@ -45,8 +46,66 @@ function ColumnComponent({ column, onDeleteColumn, editColumn, cards, addCard,ed
     editColumn(column.id, localColumnTitle);
     setEditingColumn(false);
   }, [column.id, localColumnTitle, editColumn]);
-console.log("Rendering Column:", column.id);
 
+
+function autoScrollDuringDrag(e: MouseEvent | TouchEvent) {
+
+const scrollSpeed = 10; // pixels per move
+
+const threshold = 50; // pixels from top/bottom to trigger scroll
+
+let clientY: number;
+
+
+
+if (e instanceof TouchEvent) {
+
+clientY = e.touches[0].clientY;
+
+} else {
+
+clientY = e.clientY;
+
+}
+
+
+
+const viewportHeight = window.innerHeight;
+
+
+
+if (clientY < threshold) {
+
+window.scrollBy({ top: -scrollSpeed, behavior: "smooth" });
+
+} else if (clientY > viewportHeight - threshold) {
+
+window.scrollBy({ top: scrollSpeed, behavior: "smooth" });
+
+}
+
+}
+const handleDrag = (e: MouseEvent | TouchEvent) => autoScrollDuringDrag(e);
+
+
+
+const onDragStartGlobal = () => {
+
+document.addEventListener("mousemove", handleDrag);
+
+document.addEventListener("touchmove", handleDrag);
+
+};
+
+
+
+const onDragEndGlobal = () => {
+
+document.removeEventListener("mousemove", handleDrag);
+
+document.removeEventListener("touchmove", handleDrag);
+
+};
 
   return (
     <div className="p-4  mx-4 rounded-2xl border-2  flex flex-col  border-[var(--two)] bg-[var(--two)] mb-10 
@@ -101,134 +160,7 @@ console.log("Rendering Column:", column.id);
 
             </div>
 
-          {/*
-            <div
-            className={`flex w-full flex-col gap-4 mb-2 px-2 min-h-[80px] ${
-    cards.length === 0 ? "borde-r-2 border-dashed border-gray-300 rounded-md p-4" : ""
-  }`}
-  onDragOver={(e) => e.preventDefault()}
-  onDrop={(e) => {
-    e.preventDefault();
-
-    if (draggedCardId !== null && sourceColumnId !== null && sourceIndex !== null) {
-      moveCard(
-        draggedCardId,
-        sourceColumnId,
-        column.id,
-        sourceIndex,
-        0 // insert at start since column is empty
-      );
-
-      setDraggedCardId(null);
-      setSourceColumnId(null);
-      setSourceIndex(null);
-    }
-  }}>
-
-    {cards.length === 0 ? (
-
-// <-- Empty State -->
-
-<div className="flex flex-col  items-center justify-center py-10 ">
-
-<p className="text-[var(--button)]  text-lg mb-2">No cards yet</p>
-
-<p className="text-[var(--list)] text-sm mb-4">Click below to add your first card</p>
-
-
-
-</div>
-
-) : (
-
-// <-- Existing cards -->
-  (cards || []).map((card,index) => {
-
-  return (
-       <div
-   key={card.id}
-    className="border-2 pb-8 rounded p-2 bg-[var(--card)]  border-[var(--cards)] "
-    draggable
-    onDragStart={(e) => {
-      e.dataTransfer.effectAllowed = "move";
-      setDraggedCardId(card.id);
-      setSourceColumnId(column.id);
-      setSourceIndex(index);
-    }}
-    onDragOver={(e) => e.preventDefault()}
-    onDrop={(e) => {
-      e.preventDefault();
-      e.stopPropagation(); // Prevent bubbling to column drop
-      if (draggedCardId && sourceColumnId && sourceIndex !== null) {
-        moveCard(draggedCardId, sourceColumnId, column.id, sourceIndex, index);
-        setDraggedCardId(null);
-        setSourceColumnId(null);
-        setSourceIndex(null);
-      }
-    }} >
-   
-      <h4 className="font-bold text-lg mb-4 text-[var(--text)] ">{card.title}</h4>
-
-      <div className="card break-all text-md text-[var(--desc)] p-2 mb-2">
-        <ReactMarkdown>{card.description || "Nothing yet..."}</ReactMarkdown>
-      </div>
-
-<div className="flex gap-2 mt-2">
-
-{card.tags.map((tag) => (
-
-<Badge key={tag} variant="primary" size="sm">
-
-{tag}
-
-</Badge>
-
-))}
-
-</div>
-      {card.dueDate && (
-        <Badge variant="secondary">
-          {new Date(card.dueDate).toDateString()}
-        </Badge>
-      )}
-   
-      <div className="flex mt-4 gap-4 items-center justify-end">
-        <MdEdit
-          onClick={() => {
-            setEditingCard(card);
-            setShowCardModal(true);
-          }}
-          className="text-gray-500 cursor-pointer text-lg"
-        />
-
-        <FaTrash
-          onClick={() => deleteCard(column.id, card.id)}
-          className="text-red-500 cursor-pointer text-lg"
-        />
-      </div>
-      <div>
-        <div className="mt-10">
-          <CommentInput cardId={card.id} addComment={addComment} />
-        </div>
-        
-         <div className="mt-4 border-[var(--b)]  rounded  py-3 border-2 ">
-                
-            <CardComments cardId={card.id} />
-         </div>
-     
-      </div>
-    
-</div>
-  );
-})
-
-)}
-
-
-
-      
-          </div>
-         */}
+          
 <div
 
 className={`flex w-full flex-col gap-4 mb-2 px-2 h-full ${
@@ -308,9 +240,9 @@ setDraggedCardId(card.id);
 setSourceColumnId(column.id);
 
 setSourceIndex(index);
-
+onDragStartGlobal()
 }}
-
+onDragEnd={onDragEndGlobal}
 onDragOver={(e) => e.preventDefault()}
 
 >
@@ -426,8 +358,12 @@ className="text-red-500 cursor-pointer text-lg"
 
       )}
 
- 
+
+    
+
+   
       {showCardModal && (
+        
         <CardComponent
           columnId={column.id}
           addCard={addCard}
