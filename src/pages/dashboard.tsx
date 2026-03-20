@@ -192,7 +192,7 @@ handleCreateBoard();
       <div className="flex  justify-between items-center  fixed top-0 left-0 w-full bg-[var(--bg-color)] shadow-md py-5  px-2 z-50 mb-20">
             <DarkModeToggle />
             <h1 className="text-xl flex-nowrap font-bold text-[var(--text)]">
-              Workflow Dashboard
+             Dashboard
             </h1>
             
             <Button

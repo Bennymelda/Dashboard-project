@@ -169,7 +169,7 @@ cards.length === 0 ? "border-2 border-dashed border-gray-300 rounded-md p-4" : "
 
 }`}
 
-onDragOver={(e) => e.preventDefault()} // allow drop anywhere
+onDragOver={(e) => e.preventDefault()}
 
 onDrop={(e) => {
 
@@ -177,23 +177,47 @@ e.preventDefault();
 
 
 
-if (draggedCardId !== null && sourceColumnId !== null && sourceIndex !== null) {
+if (draggedCardId && sourceColumnId !== null && sourceIndex !== null) {
 
 const columnRect = e.currentTarget.getBoundingClientRect();
 
-const offsetY = e.clientY - columnRect.top; // mouse position inside column
+const offsetY = e.clientY - columnRect.top;
 
 
 
-// approximate index based on card height (adjust 100 if your card height differs)
+// Try to calculate actual card height dynamically
 
-const approxIndex = Math.floor(offsetY / 100);
+const cardElems = e.currentTarget.querySelectorAll('.card');
 
-const toIndex = Math.min(Math.max(approxIndex, 0), cards.length);
+const cardHeight = cardElems[0]?.clientHeight || 120;
 
 
 
-moveCard(draggedCardId, sourceColumnId, column.id, sourceIndex, toIndex);
+let approxIndex = Math.floor(offsetY / cardHeight);
+
+approxIndex = Math.max(0, Math.min(approxIndex, cards.length - 1));
+
+
+
+if (sourceColumnId === column.id && sourceIndex === approxIndex) {
+
+// same spot, nothing to do
+
+setDraggedCardId(null);
+
+setSourceColumnId(null);
+
+setSourceIndex(null);
+
+return;
+
+}
+
+
+
+// Move first, then clear drag state
+
+moveCard(draggedCardId, sourceColumnId, column.id, sourceIndex, approxIndex);
 
 
 
