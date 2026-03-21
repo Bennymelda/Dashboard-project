@@ -1,29 +1,113 @@
-‎Knowledge Board
-‎
-‎A production-style collaborative workspace tool for organizing ideas, documentation, and tasks using boards, columns, and cards.
-‎
+‎Collaborative Knowledge Board
 
-‎This project simulates a real SaaS internal product used by teams to manage work visually and collaboratively.
+‎A web-based board for organizing cards, columns, and comments collaboratively  similar to Trello.
 ‎
-
-‎Built using React + Vite + TypeScript with a strong focus on scalable architecture, performance, accessibility, and clean component design.
+‎ Features
 ‎
-‎Live Demo
-
-‎https://dashboard-project-9ly6.onrender.com
-‎(Render.com)
+‎• Columns & Cards: Create, edit, and delete columns and cards.
 ‎
-
-
-‎Tech Stack
-
-‎React (Vite)
-‎TypeScript
-‎TailwindCSS
-‎React Context API for global state management
-‎React Markdown for markdown parsing
-‎No UI component libraries were used as required.
+‎• Comments: Add comments to cards in real-time.
 ‎
+‎• Drag-and-Drop: Move cards between columns or within a column.
+‎
+‎• Auto-Scroll on Drag: Dragging near viewport edges scrolls the page automatically.
+‎
+‎•Responsive Design: Works on desktop and mobile layouts.
+‎
+‎ Tech Stack
+‎
+‎Frontend: React + TypeScript
+‎Routing: React Router
+‎State Management: Context API
+‎Markdown Support: React Markdown for card descriptions
+‎UI Elements: React Icons, TailwindCSS
+‎ Installation & Run
+‎Bash
+‎Copy code
+‎# Clone the repo
+‎git clone https://github.com/Bennymelda/<repo>.git
+‎cd <repo>
+‎
+‎# Install dependencies
+‎npm install
+‎
+‎# Start development server
+‎npm run dev
+‎
+‎# Run tests
+‎
+‎npm test
+‎
+‎ Architecture Overview
+‎
+‎• ColumnComponent: Handles rendering a single column, editing its title, and managing card creation.Also displays card content, comments, and edit/delete buttons.
+‎
+‎: 
+‎• CommentInput: Handles comment creation for individual cards.
+‎
+‎• Drag-and-Drop: Custom DnD implemented with onDragStart, onDrop, and onDragOver.
+‎
+‎• Global Drag Auto-Scroll: Smoothly scrolls viewport while dragging near edges.
+‎
+‎Performance Notes
+‎
+‎Test Setup
+‎
+‎3–20+ columns, 50–200+ cards with active comment threads.
+‎
+‎Environment: Chrome/Edge, dev mode with React DevTools.
+‎
+‎
+‎Observations
+‎
+‎Works smoothly for small boards.
+‎Drag-and-drop generally functional.
+‎Adding comments updates only the relevant card.
+‎
+‎Optimizations
+‎
+‎React.memo for Column and Card components to reduce unnecessary re-renders.
+‎
+‎Drag index clamping prevents invalid moves.
+‎
+‎Auto-scroll only active during drag.
+‎
+‎Note: Virtualization (e.g., react-window) is not yet implemented. Large boards (200+ cards) may experience lag.
+‎
+‎Tradeoff Analysis: Custom DnD vs Library
+‎
+‎Aspect
+‎Custom DnD
+‎Library (e.g., react-beautiful-dnd)
+‎Flexibility
+‎Full control over behavior
+‎Limited by library API
+‎Complexity
+‎Higher (manual index handling, edge cases)
+‎Lower, built-in accessibility & animations
+‎Performance
+‎Reasonable for small boards
+‎Optimized for large lists, supports virtualization
+‎Learning Curve
+‎Moderate
+‎Low to moderate
+‎
+‎
+‎We chose custom DnD for learning purposes and fine-grained control.
+‎
+‎ Future Improvements
+‎
+‎• Integrate virtualization (react-window) for smoother performance on large boards.
+‎
+‎• Improve drag-and-drop edge-case handling (especially last-card moves).
+‎
+‎• Add real-time collaborative updates via WebSockets.
+‎
+‎• Optimize state management to reduce re-renders further.
+‎
+‎Contribution
+‎
+‎Contributions are welcome! Open a PR or issue if you find bugs or want to suggest features.‎
 
 ‎
 ‎Folder Structure Explanation
